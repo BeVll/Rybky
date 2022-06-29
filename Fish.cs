@@ -2,7 +2,7 @@
 
 public class Fishs
 {
-		string Type { get; set; }
+		public string Type { get; set; }
 
 		public Fish()
         {
