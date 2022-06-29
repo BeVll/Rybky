@@ -11,8 +11,10 @@ namespace Рибки
         private List<List<Fishs>> Fishs;
         private Fishs picked;
         private Fishs empty_fish;
+        private int points;
         public Game()
         {
+            points = 0;
             picked = new Fishs();
             empty_fish = new Fishs();
             Fishs = new List<List<Fishs>>();
@@ -44,18 +46,37 @@ namespace Рибки
             }
         }
 
-        private void GenerateFishs(int row)
+        private void GenerateFishs(int count_row)
         {
-           
-            Random rnd = new Random();
-            for (int i = 0; i < 6; i++)
+            for (int j = 0; j < count_row; j++)
             {
-                if (rnd.Next(0, 2) != 1)
+                Random rnd = new Random();
+                for (int i = 0; i < 6; i++)
                 {
-                    Fishs f = new Fishs();
-                    Fishs[row][i] = f;
+                    if (rnd.Next(0, 2) != 1)
+                    {
+                        Fishs f = new Fishs();
+                        Fishs[j][i] = f;
+                    }
                 }
             }
+        }
+        public bool CheckGenerate()
+        {
+            int count = 0;
+            for(int i = 0; i < 6; i++)
+            {
+                for(int j = 0; j < 6; j++)
+                {
+                    if (Fishs[i][j].Type != " ")
+                        count++;
+                }
+            }
+
+            if (count < 4)
+                return true;
+            else
+                return false;
         }
 
         private int ColumnPlus(int column)
@@ -80,15 +101,30 @@ namespace Рибки
 
         public void ChooseFish()
         {
+            Random random = new Random();
             bool check = true;
             int row = 0;
             int column = 0;
+            int row_temp = 0;
+            int column_temp = 0;
             picked.Type = "Empty";
-            while (check != false)
+            while (Fishs[row][column].Type == " " || LastRow(column) == -1)
             {
                 if (Fishs[row][column].Type == " ")
+                {
                     column = ColumnPlus(column);
+                    if (LastRow(column) == -1)
+                        column = ColumnMinus(column);
+                    else
+                        row = LastRow(column);
+                }
+            }
+            while (check != false)
+            {
+                if (CheckGenerate() == true)
+                    GenerateFishs(random.Next(1, 6));
                 Console.Clear();
+                Console.WriteLine($"Points: {points}");
                 Console.WriteLine($"Picked: {picked.Type}");
                 Show(row, column);
                 ConsoleKeyInfo key = Console.ReadKey();
@@ -117,6 +153,8 @@ namespace Рибки
                     {
                         if (picked.Type == "Empty")
                         {
+                            row_temp = row;
+                            column_temp = column;
                             picked.Type = Fishs[row][column].Type;
                             Fishs[row][column].Type = empty_fish.Type;
                         }
@@ -126,9 +164,20 @@ namespace Рибки
                             {
                                 Fishs[row][column].Type = empty_fish.Type;
                                 picked.Type = "Empty";
+                                points++;
+                                column = ColumnPlus(column);
+                                if (LastRow(column) == -1)
+                                    column = ColumnPlus(column);
+                                else
+                                    row = LastRow(column);
                             }
 
-                            else if (Fishs[row][column].Eat(picked.Type) != "1")
+                            else if (Fishs[row][column].Eat(picked.Type) == "1")
+                            {
+                                Fishs[row_temp][column_temp].Type = picked.Type;
+                                picked.Type = "Empty";
+                            }
+                            else
                             {
                                 Fishs[row][column].Type = Fishs[row][column].Eat(picked.Type);
                                 picked.Type = "Empty";
@@ -143,9 +192,9 @@ namespace Рибки
 
         public void StartGame()
         {
+            Random random = new Random();
             bool finished = true;
-            GenerateFishs(0);
-            GenerateFishs(1);
+            GenerateFishs(random.Next(1, 6));
             while (finished != false)
             {
                 
