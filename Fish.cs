@@ -52,7 +52,10 @@ public class Fishs
 	private string Eatm(string TypeEat)
 	{
 		if (TypeEat == "s")
+		{
+			Type = "M";
 			return "M";
+		}
 		return "1";
 	}
 	private string EatM(string TypeEat)
@@ -65,7 +68,10 @@ public class Fishs
 	private string Eatb(string TypeEat)
 	{
 		if (TypeEat == "m")
+		{
+			Type = "B";
 			return "B";
+		}
 		else if (TypeEat == "M")
 			return "0";
 
