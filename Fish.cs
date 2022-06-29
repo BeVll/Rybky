@@ -2,47 +2,83 @@
 
 public class Fishs
 {
-		public string Type { get; set; }
+	string Type { get; set; }
 
-		public Fish()
-        {
-			Random rnd = new Random();
-			int x = rnd.Next(0, 101);
+	public Fishs()
+	{
+		Random rnd = new Random();
+		int x = rnd.Next(0, 101);
 
-			if (x < 40)
-				Type = "s";
-			else if (x < 75)
-				Type = "m";
-			else 
-				Type = "b";
+		if (x < 40)
+			Type = "s";
+		else if (x < 75)
+			Type = "m";
+		else
+			Type = "b";
 
-        }
-		public Eat(string TypeEat)
-        {
-			
-        }
-
-		private EatS(string TypeEat)
-        {
-
-        }
-
-		private Eatm(string TypeEat)
-        {
-
-        }
-		private EatM(string TypeEat)
-		{
-
-		}
-		private Eatb(string TypeEat)
-		{
-
-		}
-		private EatB(string TypeEat)
-		{
-
-		}
-
+	}
 	
+	/// <summary>
+    /// Вертає: 0 - якщо вибухає 1 - якщо Не може з'їсти
+    /// </summary>
+    /// <param name="TypeEat"></param>
+    /// <returns></returns>
+    public string Eat(string TypeEat)
+	{
+		switch (Type)
+		{
+			case "s":
+				return EatS(TypeEat);
+				break;
+			case "m":
+				return Eatm();
+				break;
+			case "M":
+				return EatM();
+				break;
+			case "b":
+				return Eatb();
+			case "B":
+				return EatB();
+
+		}
+		return "1";
+	}
+
+	private string EatS(string TypeEat)
+	{
+		return "1";
+	}
+	private string Eatm(string TypeEat)
+	{
+		if (TypeEat == "s")
+			return "M";
+		return "1";
+	}
+	private string EatM(string TypeEat)
+	{
+		if (TypeEat == "s")
+			return "0";
+
+		return "1";
+	}
+	private string Eatb(string TypeEat)
+	{
+		if (TypeEat == "m")
+			return "B";
+		else if (TypeEat == "M")
+			return "0";
+
+		return "1";
+	}
+	private string EatB(string TypeEat)
+	{
+		if (TypeEat == "m")
+			return "0";
+		else if (TypeEat == "M")
+			return "0";
+		return "1";
+	}
+
+
 }
