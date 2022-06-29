@@ -2,7 +2,7 @@
 
 public class Fishs
 {
-	string Type { get; set; }
+	public string Type { get; set; }
 
 	public Fishs()
 	{
@@ -31,15 +31,15 @@ public class Fishs
 				return EatS(TypeEat);
 				break;
 			case "m":
-				return Eatm();
+				return Eatm(TypeEat);
 				break;
 			case "M":
-				return EatM();
+				return EatM(TypeEat);
 				break;
 			case "b":
-				return Eatb();
+				return Eatb(TypeEat);
 			case "B":
-				return EatB();
+				return EatB(TypeEat);
 
 		}
 		return "1";
