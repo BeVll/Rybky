@@ -29,13 +29,10 @@ public class Fishs
 		{
 			case "s":
 				return EatS(TypeEat);
-				break;
 			case "m":
 				return Eatm(TypeEat);
-				break;
 			case "M":
 				return EatM(TypeEat);
-				break;
 			case "b":
 				return Eatb(TypeEat);
 			case "B":

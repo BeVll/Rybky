@@ -160,7 +160,8 @@ namespace Рибки
                         }
                         else
                         {
-                            if (Fishs[row][column].Eat(picked.Type) == "0")
+                            string temp = Fishs[row][column].Eat(picked.Type);
+                            if (temp == "0")
                             {
                                 Fishs[row][column].Type = empty_fish.Type;
                                 picked.Type = "Empty";
@@ -172,14 +173,14 @@ namespace Рибки
                                     row = LastRow(column);
                             }
 
-                            else if (Fishs[row][column].Eat(picked.Type) == "1")
+                            else if (temp == "1")
                             {
                                 Fishs[row_temp][column_temp].Type = picked.Type;
                                 picked.Type = "Empty";
                             }
                             else
                             {
-                                Fishs[row][column].Type = Fishs[row][column].Eat(picked.Type);
+                                Fishs[row][column].Type = temp;
                                 picked.Type = "Empty";
                             }
                         }
